@@ -1,6 +1,18 @@
 import '../styles/App.css';
 
+import studentsList from '../data/students.json';
+
 function App() {
+  const htmlStudents = studentsList.map(student => {
+    return (
+    <tr key={student.id}>
+    <td>{student.name}</td>
+    <td>{student.counselor}</td>
+    <td>{student.speciality}</td>
+  </tr>
+     );
+    });
+
   return (
     <div className="page">
       {/* header */}
@@ -18,27 +30,16 @@ function App() {
       </header>
       {/* main*/}
       <main>
-        <table>
+        <table className="students_list">
           {/* cabecera*/}
           <thead><tr>
-            <th>Columna 1</th>
-            <th>Columna 2</th>
-            <th>Columna 3</th>
+            <th>Nombre</th>
+            <th>Tutora</th>
+            <th>Especialidad</th>
           </tr></thead>
           {/*fin de cabecera*/}
           <tbody>
-            {/*primera fila*/}
-            <tr>
-              <td>Columa 1 de la fila 1</td>
-              <td>Columa 2 de la fila 1</td>
-              <td>Columa 3 de la fila 1</td>
-            </tr>
-            {/*segunda fila*/}
-            <tr>
-              <td>Columa 1 de la fila 2</td>
-              <td>Columa 2 de la fila 2</td>
-              <td>Columa 3 de la fila 2</td>
-            </tr>
+            {htmlStudents}
           </tbody>
         </table>
         {/* new contact */}
@@ -54,8 +55,8 @@ function App() {
           <input
             className="new-student__input"
             type="text"
-            name="tutor"
-            id="tutor"
+            name="counselor"
+            id="counselor"
             placeholder="Tutora"
           />
           <input
