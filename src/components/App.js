@@ -7,8 +7,34 @@ function App() {
 
   const [data, setData] = useState(studentsList)
 
+  const [name, setName] = useState("");
+  const [counselor, setCounselor] = useState("");
+  const [speciality, setSpeciality] = useState("");
+
+
   const handleChangeSearch = (ev) => {
     setSearch(ev.currentTarget.value);
+  };
+
+  const handleChangeName= (ev)=>{
+    setName(ev.currentTarget.value);
+  };
+
+  const handleChangeCounselor= (ev)=>{
+    setCounselor(ev.currentTarget.value);
+  };
+
+  const handleChangeSpeciality= (ev)=>{
+    setSpeciality(ev.currentTarget.value);
+  };
+  
+  const handleClick = (ev)=>{
+   ev.preventDefault();
+   const newStudent = {
+     name: name,
+     counselor: counselor,
+     speciality: speciality,
+   };
   };
 
   const htmlStudents = studentsList.results.map((student, index) => {
@@ -61,6 +87,8 @@ function App() {
             name="name"
             id="name"
             placeholder="Nombre"
+            onChange={handleChangeName}
+            value={name}
           />
           <input
             className="new-student__input"
@@ -68,6 +96,8 @@ function App() {
             name="counselor"
             id="counselor"
             placeholder="Tutora"
+            onChange={handleChangeCounselor}
+            value={counselor}
           />
           <input
             className="new-student__input"
@@ -75,8 +105,10 @@ function App() {
             name="speciality"
             id="speciality"
             placeholder="Especialidad"
+            onChange={handleChangeSpeciality}
+            value={speciality}
           />
-          <input className="new-student__btn" type="submit" value="Añadir una nueva Adalaber" />
+          <input className="new-student__btn" type="submit" value="Añadir una nueva Adalaber" onClick={handleClick} />
         </form>
       </main>
     </div >
