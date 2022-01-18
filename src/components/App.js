@@ -58,9 +58,13 @@ fetch('https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json')
   const handleClickNewStudent = (ev) => {
     newStudent.id = data.length;
     setData([...data, newStudent]);
-    };
+    setNewStudent ({
+      name:'',
+      counselor:'',
+      speciality:'',
+    });
+    }
     
-
   const htmlStudents = data.map((student) => {
     return (
       <tr key={student.id}>
