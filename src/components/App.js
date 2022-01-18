@@ -1,51 +1,75 @@
-import {useState} from "react";
+import { useState, useEffect} from "react";
 import '../styles/App.css';
-import studentsList from '../data/students.json';
 
 function App() {
-  const [search, setSearch] = useState ('');
+  const [search, setSearch] = useState('');
+  const [data, setData] = useState([]);
 
-  const [data, setData] = useState(studentsList)
+  useEffect(()=>{
+fetch('https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json')
+.then(response => response.json())
+.then(responseData => {
+  setData (responseData.results);
+ });
+ 
+}, [] );
 
+  const [newStudent, setNewStudent] = useState({
+    name:'',
+    counselor:'',
+    speciality:'',
+  });
+  
   const [name, setName] = useState("");
   const [counselor, setCounselor] = useState("");
   const [speciality, setSpeciality] = useState("");
-
 
   const handleChangeSearch = (ev) => {
     setSearch(ev.currentTarget.value);
   };
 
-  const handleChangeName= (ev)=>{
-    setName(ev.currentTarget.value);
+  const handleChangeName = (ev) => {
+    setNewStudent(
+      {
+        ...newStudent,
+        name: ev.currentTarget.value
+      }
+    );
   };
 
-  const handleChangeCounselor= (ev)=>{
-    setCounselor(ev.currentTarget.value);
+  const handleChangeCounselor = (ev) => {
+    setNewStudent(
+      {
+        ...newStudent,
+        counselor: ev.currentTarget.value
+      }
+    );
   };
 
-  const handleChangeSpeciality= (ev)=>{
-    setSpeciality(ev.currentTarget.value);
-  };
-  
-  const handleClick = (ev)=>{
-   ev.preventDefault();
-   const newStudent = {
-     name: name,
-     counselor: counselor,
-     speciality: speciality,
-   };
+  const handleChangeSpeciality = (ev) => {
+    setNewStudent(
+      {
+        ...newStudent,
+        speciality: ev.currentTarget.value
+      }
+    );
   };
 
-  const htmlStudents = studentsList.results.map((student, index) => {
+  const handleClickNewStudent = (ev) => {
+    newStudent.id = data.length;
+    setData([...data, newStudent]);
+    };
+    
+
+  const htmlStudents = data.map((student) => {
     return (
-    <tr key={index}>
-    <td>{student.name}</td>
-    <td>{student.counselor}</td>
-    <td>{student.speciality}</td>
-  </tr>
-     );
-    });
+      <tr key={student.id}>
+        <td>{student.name}</td>
+        <td>{student.counselor}</td>
+        <td>{student.speciality}</td>
+      </tr>
+    );
+  });
 
   return (
     <div className="page">
@@ -59,8 +83,8 @@ function App() {
             type="search"
             name="search"
             placeholder="Filtrar contactos por nombre"
-            onChange = {handleChangeSearch}
-            value = {search}
+            onChange={handleChangeSearch}
+            value={search}
           />
         </form>
       </header>
@@ -79,7 +103,7 @@ function App() {
           </tbody>
         </table>
         {/* new contact */}
-        <form className="new-student__form">
+        <form className="new-student__form" onSubmit={(ev) => ev.preventDefault()}>
           <h2 className="new-student__title">Añadir una Adalaber</h2>
           <input
             className="new-student__input"
@@ -88,7 +112,7 @@ function App() {
             id="name"
             placeholder="Nombre"
             onChange={handleChangeName}
-            value={name}
+            value={newStudent.name}
           />
           <input
             className="new-student__input"
@@ -97,7 +121,7 @@ function App() {
             id="counselor"
             placeholder="Tutora"
             onChange={handleChangeCounselor}
-            value={counselor}
+            value={newStudent.counselor}
           />
           <input
             className="new-student__input"
@@ -106,9 +130,9 @@ function App() {
             id="speciality"
             placeholder="Especialidad"
             onChange={handleChangeSpeciality}
-            value={speciality}
+            value={newStudent.speciality}
           />
-          <input className="new-student__btn" type="submit" value="Añadir una nueva Adalaber" onClick={handleClick} />
+          <input className="new-student__btn" type="submit" value="Añadir una nueva Adalaber" onClick={handleClickNewStudent} />
         </form>
       </main>
     </div >
