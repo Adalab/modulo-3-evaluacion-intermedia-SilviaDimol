@@ -11,11 +11,7 @@ function App() {
     setSearch(ev.currentTarget.value);
   };
 
-  const filterData = data.filter((oneStudent) => {
-   oneStudent.name.includes(search));
-  };
-
-  const htmlStudents = data.results.map((student, index) => {
+  const htmlStudents = studentsList.results.map((student, index) => {
     return (
     <tr key={index}>
     <td>{student.name}</td>
