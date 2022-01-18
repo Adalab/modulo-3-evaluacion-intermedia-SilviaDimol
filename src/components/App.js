@@ -1,11 +1,23 @@
+import {useState} from "react";
 import '../styles/App.css';
-
 import studentsList from '../data/students.json';
 
 function App() {
-  const htmlStudents = studentsList.map(student => {
+  const [search, setSearch] = useState ('');
+
+  const [data, setData] = useState(studentsList)
+
+  const handleChangeSearch = (ev) => {
+    setSearch(ev.currentTarget.value);
+  };
+
+  const filterData = data.filter((oneStudent) => {
+   oneStudent.name.includes(search));
+  };
+
+  const htmlStudents = data.results.map((student, index) => {
     return (
-    <tr key={student.id}>
+    <tr key={index}>
     <td>{student.name}</td>
     <td>{student.counselor}</td>
     <td>{student.speciality}</td>
@@ -25,6 +37,8 @@ function App() {
             type="search"
             name="search"
             placeholder="Filtrar contactos por nombre"
+            onChange = {handleChangeSearch}
+            value = {search}
           />
         </form>
       </header>
