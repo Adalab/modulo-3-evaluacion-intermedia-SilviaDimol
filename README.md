@@ -1,4 +1,4 @@
-This is the intermediate evaluation of module 3 of the adalaba course (promotion O).
+This is the intermediate evaluation of module 3 of the Adalab course (promotion O).
 
 The goal is to create a search engine of this promotion's students, with the option of including new ones.
 
